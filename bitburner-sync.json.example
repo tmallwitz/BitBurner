@@ -1,0 +1,6 @@
+{
+  "authToken": "abc",
+  "scriptRoot": "./dist",
+  "allowDelete": true,
+  "serverUrl": "127.0.0.1"
+}
