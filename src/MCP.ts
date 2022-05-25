@@ -1,4 +1,4 @@
-import {RootAll} from "root-alll";
+import {RootAll} from "/root-all";
 import {RunAtAllServers} from "run-at-all-servers";
 import {upgradeHackNet} from "HacknetBot";
 
@@ -8,7 +8,10 @@ export async function main(ns: NS): Promise<void> {
     const currentHackLevel = ns.getHackingLevel();
     if (currentHackLevel != hackLevel) {
       RootAll(ns);
-      await RunAtAllServers(ns);
+      let target = "n00dles";
+      if (currentHackLevel >= 10)
+        target = "joesguns";
+      await RunAtAllServers(ns,target);
       hackLevel = currentHackLevel;
     }
     await upgradeHackNet(ns);

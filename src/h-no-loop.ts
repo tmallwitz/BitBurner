@@ -5,8 +5,6 @@ export async function main(ns: NS) {
     ns.exit();
   }
   const target = <string>ns.args[0];
-  await ns.asleep(Math.floor(Math.random() * 10000));
-  while (true) {
-    await ns.hack(target);
-  }
+  const res =  await ns.hack(target);
+  ns.tprint("Hack: " + res);
 }

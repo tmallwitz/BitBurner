@@ -12,7 +12,7 @@ export async function upgradeHackNet(ns: NS) {
   const hn = ns.hacknet;
   const multi = ns.getHacknetMultipliers();
   const nodes = hn.numNodes();
-  let lowestROI = 60*60*24; // ROI over 24 h, no upgrades please
+  let lowestROI = 60*60*12; // ROI over 24 h, no upgrades please
   let server= -1;
   let what = '?';
 

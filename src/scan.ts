@@ -47,7 +47,7 @@ export async function main(ns: NS) {
                 terminalInput[handler].onKeyDown({keyCode:13,preventDefault:()=>null});
             })();"
         
-            style='color:${nameColor}'>${name}</a> `,
+            style='color:${nameColor}'>${name} ${ns.getServerMaxRam(name)}</a> `,
       `<font color='fuchisa'>${ctText}</font>`,
     ].join("");
   });

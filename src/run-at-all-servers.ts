@@ -1,9 +1,13 @@
 import {getServers} from "utils";
 
-export async function RunAtAllServers(ns: NS) {
-  const w = 5;
-  const g = 12;
-  const h = 1;
+export async function RunAtAllServers(ns: NS, target: string) {
+  const w = 75;
+  const g = 880;
+  const h = 78;
+
+  /*
+var curGrowTime = ns.getGrowTime(target); var curWeakTime = ns.getWeakenTime(target); var curHackTime = ns.getHackTime(target);
+   */
 
   const sum = w+g+h;
 
@@ -48,19 +52,22 @@ export async function RunAtAllServers(ns: NS) {
             const threadsToStart = Math.min(numThreads,hThreads);
             hThreads -= threadsToStart;
             numThreads -= threadsToStart;
-            ns.exec(scriptH,server.name,threadsToStart);
+            ns.exec(scriptH,server.name,threadsToStart,target);
+            ns.tprint(`  Starting HackThreads: ${threadsToStart}`);
           }
           if (gThreads > 0 && numThreads > 0) {
             const threadsToStart = Math.min(numThreads,gThreads);
-            hThreads -= threadsToStart;
+            gThreads -= threadsToStart;
             numThreads -= threadsToStart;
-            ns.exec(scriptG,server.name,threadsToStart);
+            ns.exec(scriptG,server.name,threadsToStart,target);
+            ns.tprint(`  Starting GrowThreads: ${threadsToStart}`);
           }
           if (wThreads > 0 && numThreads > 0) {
             const threadsToStart = Math.min(numThreads,wThreads);
-            hThreads -= threadsToStart;
+            wThreads -= threadsToStart;
             numThreads -= threadsToStart;
-            ns.exec(scriptW,server.name,threadsToStart);
+            ns.exec(scriptW,server.name,threadsToStart,target);
+            ns.tprint(`  Starting WeakenThreads: ${threadsToStart}`);
           }
         } else {
           ns.tprint(`Cannot run on ${server.name}, ram is only with ${ns.getServerMaxRam(server.name)}`);
@@ -72,5 +79,10 @@ export async function RunAtAllServers(ns: NS) {
 
 /** @param {NS} ns */
 export async function main(ns: NS): Promise<void>{
-  await RunAtAllServers(ns);
+  if (!(typeof ns.args[0] === 'string')) {
+    ns.tprint('Arg0 must be the target name!')
+    ns.exit();
+  }
+  const target = <string>ns.args[0];
+  await RunAtAllServers(ns,target);
 }
